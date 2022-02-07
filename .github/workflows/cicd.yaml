@@ -28,11 +28,11 @@ jobs:
       run: |
         cp package.json dist/
         cp package-lock.json dist/
-        mv dist/main.js dist/index.js
+        cp index.js dist/index.js
     - name: Deploy to deta
       uses: BogDAAAMN/deta-deploy-action@v1.0.1
       with:
-        deta-access-token: ${{ secrets.DETA_TOKEN }} #Deta access token https://docs.deta.sh/docs/cli/auth
-        deta-name: 'pise-fcm-backend' #Deta Micro name https://docs.deta.sh/docs/cli/commands/#deta-clone
-        deta-project: 'default' #Optional: Deta project name https://docs.deta.sh/docs/cli/commands/#deta-clone
-        deta-project-dir: 'dist' #Optional: directory to be deployed on Deta. Default is the root "." 
+        deta-access-token: ${{ secrets.DETA_TOKEN }}
+        deta-name: 'pise-fcm-backend'
+        deta-project: 'default'
+        deta-project-dir: 'dist'

@@ -26,7 +26,7 @@ echo '>>> copy deta micro target and rename file for deta...'
 cp -r .deta/ dist/.deta
 cp package.json dist/
 cp package-lock.json dist/
-mv dist/main.js dist/index.js
+cp index.js dist/
 
 echo '>>> Deploy "dist" to deta'
 cd dist
@@ -34,9 +34,10 @@ deta deploy
 cd ..
 
 echo '>>> Restore dir to state before build...'
-mv dist/index.js dist/main.js
 rm dist/package.json
 rm dist/package-lock.json
+rm -rf .deta
+mv dist/.deta .
 
 echo '>>> Update environment variables to deta'
 deta update --env .env
