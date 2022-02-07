@@ -1,0 +1,38 @@
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run build
+    - run: npm run test:cov
+    - run: npm run test:e2e
+    - name: Copy package file and rename file for deta
+      run: |
+        cp package.json dist/
+        cp package-lock.json dist/
+        mv dist/main.js dist/index.js
+    - name: Deploy to deta
+      uses: BogDAAAMN/deta-deploy-action@v1.0.1
+      with:
+        deta-access-token: ${{ secrets.DETA_TOKEN }} #Deta access token https://docs.deta.sh/docs/cli/auth
+        deta-name: 'pise-fcm-backend' #Deta Micro name https://docs.deta.sh/docs/cli/commands/#deta-clone
+        deta-project: 'default' #Optional: Deta project name https://docs.deta.sh/docs/cli/commands/#deta-clone
+        deta-project-dir: 'dist' #Optional: directory to be deployed on Deta. Default is the root "." 
