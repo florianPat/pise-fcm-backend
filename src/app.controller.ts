@@ -1,12 +1,31 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { FirebaseAdminService } from './firebase-admin/firebase-admin.service';
+import {
+  Body,
+  Controller,
+  InternalServerErrorException,
+  Post,
+} from '@nestjs/common';
+import ChatQuery from './interfaces/chat-query';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly firebaseService: FirebaseAdminService) {}
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @Post()
+  async sendNotification(@Body() chatQuery: ChatQuery) {
+    try {
+      // TODO: Add auth check. With a key in the header? Think about that!
+
+      const chat = await this.firebaseService.getChat(chatQuery);
+
+      await this.firebaseService.sendNotificationToTokens(
+        chat.member_tokens,
+        'Neue Nachricht in ' + chat.chat_name + '!',
+        chat.message.from_uid + ' schrieb: ' + chat.message.text,
+      );
+    } catch (error) {
+      console.log(error);
+      throw new InternalServerErrorException();
+    }
   }
 }
