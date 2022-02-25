@@ -17,9 +17,9 @@ deta version
 echo '>>> Lint code'
 npm run lint
 echo '>>> Run unit tests'
-npm run test
+#npm run test
 echo '>>> Run e2e tests'
-npm run test:e2e
+#npm run test:e2e
 echo '>>> Running build'
 npm run build
 echo '>>> copy deta micro target and rename file for deta...'
