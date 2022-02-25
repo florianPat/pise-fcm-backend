@@ -115,7 +115,7 @@ export class FirebaseAdminService {
     }
 
     let chat_name = chat.chat_name;
-    if ('' === chat_name) {
+    if (undefined === chat_name) {
       for (const memberUid of chat.member_uids) {
         if (memberUid === message.from_uid) {
           continue;
@@ -126,6 +126,11 @@ export class FirebaseAdminService {
         break;
       }
     }
+
+    message.from_username = await this.databaseGet(
+      'api/users/' + message.from_uid + '/username',
+    );
+    delete message.from_uid;
 
     return {
       chat_name,

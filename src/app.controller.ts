@@ -21,7 +21,7 @@ export class AppController {
       await this.firebaseService.sendNotificationToTokens(
         chat.member_tokens,
         'Neue Nachricht in ' + chat.chat_name + '!',
-        chat.message.from_uid + ' schrieb: ' + chat.message.text,
+        chat.message.from_username + ' hat eine neue Nachricht verschickt!',
       );
     } catch (error) {
       console.log(error);
