@@ -8,7 +8,12 @@ const createServer = async (expressInstance) => {
     AppModule,
     new ExpressAdapter(expressInstance),
   );
-
+  app.enableCors({
+    origin: '*',
+    methods: 'POST',
+    preflightContinue: true,
+    optionsSuccessStatus: 204,
+  });
   return app.init();
 };
 
