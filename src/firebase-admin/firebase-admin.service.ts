@@ -50,7 +50,11 @@ export class FirebaseAdminService {
       notification: {
         title,
         body,
-        imageUrl,
+      },
+      webpush: {
+        notification: {
+          icon: imageUrl,
+        },
       },
     });
   }
