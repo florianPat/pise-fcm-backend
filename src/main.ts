@@ -6,7 +6,7 @@ async function bootstrap() {
   app.enableCors({
     origin: '*',
     methods: 'POST',
-    preflightContinue: true,
+    preflightContinue: false,
     optionsSuccessStatus: 204,
   });
   await app.listen(3005);

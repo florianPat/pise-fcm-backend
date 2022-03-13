@@ -41,6 +41,10 @@ export class FirebaseAdminService {
     body: string,
     imageUrl?: string,
   ) {
+    if (0 === tokens.length) {
+      return;
+    }
+
     return admin.messaging().sendMulticast({
       tokens,
       notification: {

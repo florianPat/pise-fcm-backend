@@ -11,7 +11,7 @@ const createServer = async (expressInstance) => {
   app.enableCors({
     origin: '*',
     methods: 'POST',
-    preflightContinue: true,
+    preflightContinue: false,
     optionsSuccessStatus: 204,
   });
   return app.init();
