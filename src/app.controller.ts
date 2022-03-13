@@ -22,6 +22,7 @@ export class AppController {
         chat.member_tokens,
         'Neue Nachricht in ' + chat.chat_name + '!',
         chat.message.from_username + ' hat eine neue Nachricht verschickt!',
+        'https://pise.vercel.app/img/icons/android-chrome-512x512.png',
       );
     } catch (error) {
       console.log(error);

@@ -116,23 +116,15 @@ export class FirebaseAdminService {
       }
     }
 
-    let chat_name = chat.chat_name;
-    if (undefined === chat_name) {
-      for (const memberUid of chat.member_uids) {
-        if (memberUid === message.from_uid) {
-          continue;
-        }
-        chat_name = await this.databaseGet(
-          'api/users/' + memberUid + '/username',
-        );
-        break;
-      }
-    }
-
     message.from_username = await this.databaseGet(
       'api/users/' + message.from_uid + '/username',
     );
     delete message.from_uid;
+
+    let chat_name = chat.chat_name;
+    if (undefined === chat_name) {
+      chat_name = message.from_username;
+    }
 
     return {
       chat_name,
